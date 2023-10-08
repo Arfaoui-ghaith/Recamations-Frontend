@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { useAuthState } from '../context/auth'
+import { useAuthState } from '../context/Auth'
 
 export default function DynamicRoutes(props) {
 

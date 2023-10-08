@@ -11,11 +11,13 @@ import SignIn from "./Pages/Signin";
 import Dashboard from "./Pages/Dashboard";
 import DynamicRoutes from './utils/DynamicRoutes';
 import SignUp from "./Pages/SignUp";
+import {Toaster} from "react-hot-toast";
 
 function App() {
   return (
       <AuthProvider>
           <Router>
+              <Toaster />
               <Routes>
                   <Route exact path='/signin' element={<SignIn/>}/>
                   <Route exact path='/signup' element={<SignUp/>}/>

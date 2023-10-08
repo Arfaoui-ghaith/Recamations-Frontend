@@ -3,28 +3,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-
-import Link from '@mui/material/Link';
+import toast from "react-hot-toast";
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useAuthDispatch} from "../Context/Auth";
+import {useAuthDispatch} from "../context/Auth";
 import {useNavigate} from "react-router-dom";
+import axios from 'axios';
+import { Copyright } from '../utils/utils'
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -38,10 +26,18 @@ export default function SignIn() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+
+        axios.post('https://reclamations-05518ce55bfc.herokuapp.com/api/users/signin', {
             email: data.get('email'),
             password: data.get('password'),
-        });
+        }).then(res => {
+            dispatch({ type:'LOGIN', payload: res.data.token });
+            toast.success("Successfully Accessed");
+            navigate('/');
+        }).catch( err => {
+            toast.error(err?.response?.data?.message);
+            console.error(err);
+        })
     };
 
     return (
