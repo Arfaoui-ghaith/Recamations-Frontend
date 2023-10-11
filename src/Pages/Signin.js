@@ -52,8 +52,7 @@ export default function SignIn() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar
-                        alt="tek-up"
+                    <Avatar alt="tek-up"
                         src="https://edx.tek-up.de/media/image?i=202304-1/UQERjxJmWEcwXsTHLwlL8=nATv260qf-PTLrlID2.png"
                         sx={{ width: 56, height: 56 }}
                     />
