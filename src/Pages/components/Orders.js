@@ -6,53 +6,26 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import axios from "axios";
+import {useAuthState} from "../../context/Auth";
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-    return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-    createData(
-        0,
-        '16 Mar, 2019',
-        'Elvis Presley',
-        'Tupelo, MS',
-        'VISA ⠀•••• 3719',
-        312.44,
-    ),
-    createData(
-        1,
-        '16 Mar, 2019',
-        'Paul McCartney',
-        'London, UK',
-        'VISA ⠀•••• 2574',
-        866.99,
-    ),
-    createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-    createData(
-        3,
-        '16 Mar, 2019',
-        'Michael Jackson',
-        'Gary, IN',
-        'AMEX ⠀•••• 2000',
-        654.39,
-    ),
-    createData(
-        4,
-        '15 Mar, 2019',
-        'Bruce Springsteen',
-        'Long Branch, NJ',
-        'VISA ⠀•••• 5919',
-        212.79,
-    ),
-];
-
+import PreviewIcon from '@mui/icons-material/Preview';
+import DeleteIcon from '@mui/icons-material/Delete';
 function preventDefault(event) {
     event.preventDefault();
 }
 
 export default function Orders() {
+    const { user } = useAuthState();
+    const [reclamations, setReclamations] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/api/reclamations`,{
+            headers: {
+                'Authorization': `Bearer ${user}`
+            }
+        }).then(res => setReclamations(res.data?.reclamations)).catch(err => console.log(err));
+    },[reclamations, user])
     return (
         <React.Fragment>
             <Title>Reclamations</Title>
@@ -60,20 +33,23 @@ export default function Orders() {
                 <TableHead>
                     <TableRow>
                         <TableCell>Date</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Ship To</TableCell>
-                        <TableCell>Payment Method</TableCell>
-                        <TableCell align="right">Sale Amount</TableCell>
+                        <TableCell>Subject</TableCell>
+                        <TableCell>SentBy</TableCell>
+                        <TableCell>Target</TableCell>
+                        <TableCell align="right">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {reclamations.map((row) => (
                         <TableRow key={row.id}>
-                            <TableCell>{row.date}</TableCell>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.shipTo}</TableCell>
-                            <TableCell>{row.paymentMethod}</TableCell>
-                            <TableCell align="right">{`$${row.amount}`}</TableCell>
+                            <TableCell>{(new Date(row.createdAt)).toLocaleString().slice(0, 10)}</TableCell>
+                            <TableCell>{row.subject}</TableCell>
+                            <TableCell>{row.sendBy.name}</TableCell>
+                            <TableCell>{row.sendTo.name}</TableCell>
+                            <TableCell align="right">
+                                <PreviewIcon variant="contained" color="success"/>
+                                <DeleteIcon variant="contained" color="error"/>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

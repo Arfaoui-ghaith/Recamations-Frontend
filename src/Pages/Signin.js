@@ -27,7 +27,7 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        axios.post('https://reclamations-05518ce55bfc.herokuapp.com/api/users/signin', {
+        axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/api/users/signin`, {
             email: data.get('email'),
             password: data.get('password'),
         }).then(res => {

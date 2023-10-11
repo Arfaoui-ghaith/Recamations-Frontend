@@ -16,6 +16,9 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Orders from './components/Orders';
+import {useAuthDispatch} from "../context/Auth";
+import {useNavigate} from "react-router-dom";
+import {useCallback} from "react";
 
 function Copyright(props) {
     return (
@@ -55,6 +58,16 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
 
+    const dispatch = useAuthDispatch();
+    const navigate = useNavigate();
+
+    const handleOnClick = useCallback(() => navigate("/login", {replace: true}), [navigate]);
+
+    const logout = () => {
+        dispatch({ type:'LOGOUT' });
+        handleOnClick();
+    }
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Box sx={{ display: 'flex' }}>
@@ -74,7 +87,7 @@ export default function Dashboard() {
                         >
                             Dashboard
                         </Typography>
-                        <IconButton color="inherit">
+                        <IconButton color="inherit" onClick={() => logout}>
                             <Badge color="secondary">
                                 <LogoutIcon />
                             </Badge>
