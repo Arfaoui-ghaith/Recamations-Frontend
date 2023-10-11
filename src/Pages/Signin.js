@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -52,12 +52,11 @@ export default function SignIn() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar alt="tek-up"
-                        src="https://edx.tek-up.de/media/image?i=202304-1/UQERjxJmWEcwXsTHLwlL8=nATv260qf-PTLrlID2.png"
-                        sx={{ width: 56, height: 56 }}
-                    />
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        <img alt="tek-up"
+                             src="https://edx.tek-up.de/media/image?i=202306-1/14sWlJDvLh9O7HRRExEYpnIrQeM0nZm-UFtoBBGY.png"
+                             style={{ width: '50%', height: '40%', "margin-left": "auto", "margin-right": "auto", display: "block" }}
+                        />
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField

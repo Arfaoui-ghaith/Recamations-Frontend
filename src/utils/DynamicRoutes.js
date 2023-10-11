@@ -4,26 +4,15 @@ import { useAuthState } from '../context/Auth'
 
 export default function DynamicRoutes(props) {
 
-    const { user, email, reset_token } = useAuthState();
+    const { user } = useAuthState();
 
-    console.log(email,props.verification,props.verification && email != null);
-
-    if(props.verification){
-        if(email){
+    if(props.authenticated){
+        if(user){
             return <Outlet />
         }else{
-            return <Navigate to="/forget" />
-        }
-    }
-
-    if(props.reset){
-        if(reset_token){
-            return <Outlet />
-        }else{
-            return <Navigate to="/forget" />
+            return <Navigate to="/signin" />
         }
     }
 
     return user ? <Outlet /> : <Navigate to="/signin" />;
-
 }

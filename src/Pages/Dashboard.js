@@ -61,7 +61,7 @@ export default function Dashboard() {
     const dispatch = useAuthDispatch();
     const navigate = useNavigate();
 
-    const handleOnClick = useCallback(() => navigate("/login", {replace: true}), [navigate]);
+    const handleOnClick = useCallback(() => navigate("/signin", {replace: true}), [navigate]);
 
     const logout = () => {
         dispatch({ type:'LOGOUT' });
@@ -87,7 +87,7 @@ export default function Dashboard() {
                         >
                             Dashboard
                         </Typography>
-                        <IconButton color="inherit" onClick={() => logout}>
+                        <IconButton color="inherit" onClick={() => logout()}>
                             <Badge color="secondary">
                                 <LogoutIcon />
                             </Badge>
