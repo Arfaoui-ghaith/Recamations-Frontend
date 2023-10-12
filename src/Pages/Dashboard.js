@@ -19,6 +19,9 @@ import Orders from './components/Orders';
 import {useAuthDispatch} from "../context/Auth";
 import {useNavigate} from "react-router-dom";
 import {useCallback} from "react";
+import {Fab} from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import MenuIcon from '@mui/icons-material/Menu';
 
 function Copyright(props) {
     return (
@@ -92,6 +95,7 @@ export default function Dashboard() {
                                 <LogoutIcon />
                             </Badge>
                         </IconButton>
+
                     </Toolbar>
                 </AppBar>
 
