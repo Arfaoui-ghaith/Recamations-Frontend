@@ -16,14 +16,12 @@ function App() {
   return (
       <AuthProvider>
           <Router>
-              <Toaster />
               <Routes>
                   <Route exact path='/signin' element={<SignIn/>}/>
 
                   <Route exact path='/' element={<DynamicRoutes authenticated/>}>
                       <Route exact path='/' element={<Dashboard/>}/>
                   </Route>
-
               </Routes>
           </Router>
       </AuthProvider>

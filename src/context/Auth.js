@@ -5,16 +5,17 @@ const AuthStateContext = React.createContext();
 const AuthDispatchContext = React.createContext();
 
 let user = null;
+let role = null;
 const token = localStorage.getItem("ReclamationsToken");
 
 if(token){
     const decodedToken = jwtDecode(token);
     const expiresAt = new Date(decodedToken.exp * 1000);
-
     if(new Date() > expiresAt){
         localStorage.removeItem('ReclamationsToken');
     } else {
         user = token;
+        role = decodedToken.role
     }
 } else {
     console.error('token not found');
@@ -26,7 +27,7 @@ const authReducer = (state, action) => {
             localStorage.setItem('ReclamationsToken',action.payload);
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload
             }
         case 'LOGOUT' :
             localStorage.removeItem('ReclamationsToken');
@@ -40,7 +41,7 @@ const authReducer = (state, action) => {
 }
 
 export const AuthProvider = ({ children }) => {
-    const [state, dispatch] = React.useReducer(authReducer, { user });
+    const [state, dispatch] = React.useReducer(authReducer, { user, role });
 
     return (
         <AuthDispatchContext.Provider value={dispatch}>
